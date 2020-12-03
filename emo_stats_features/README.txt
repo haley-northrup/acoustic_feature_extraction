@@ -1,5 +1,7 @@
 Compute emotion statistics from segment-level emotion predictions over a call or day 
 
+adapted from: /nfs/turbo/chai-health/aromana/emotion_features 
+
 run_emotion_stats.sh: script to run get_emotion_stats.py as a job, configuration settings are in this file 
 
 get_emotion_stats.py: computes emotion statistics  
