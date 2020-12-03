@@ -39,7 +39,7 @@ def get_emo_stats(args):
     segment_df['call_date'] = segment_df['call_datetime'].dt.date
     segment_df['day_id'] = segment_df['subject_id'].apply(str) + '_' + segment_df['call_date'].apply(str)   
 
-    #filter call type (personal, assessment, both) 
+    #filter call type (personal, assessment, all) 
     if args.call_type == 'personal':
         segment_df = segment_df.loc[segment_df['is_assessment'] == 'f', :]
     elif args.call_type == 'assessment':
@@ -58,7 +58,7 @@ def get_emo_stats(args):
 
     #Generate statistics dataframe 
     #*****************************
-    for idx in idx_vals[0:5]: #iterate over calls or days         
+    for idx in idx_vals: #iterate over calls or days         
         temp_df = segment_df.loc[segment_df[idx_col] == idx]
         
         func_dict = compute_statistics(temp_df, cols)
