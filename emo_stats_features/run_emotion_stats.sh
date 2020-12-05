@@ -14,8 +14,8 @@
 
 module load python-anaconda3
 
-python3 get_emotion_stats_new.py \
+python3 get_emotion_stats.py \
 --level='day' \
---call_type='assessment' \
+--call_type='personal' \
 --output_dir='.' \
 --emo_pred_file='/nfs/turbo/McInnisLab/priori_v1_data/collections/emotion_preds.csv' \
