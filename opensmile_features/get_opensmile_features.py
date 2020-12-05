@@ -31,9 +31,9 @@ def extract_open_smile_features(args):
  
     #get segment metadata 
     metadata_df = pd.read_csv(args.metadata_path)
-    metadata_df['datetime'] = pd.to_datetime(metadata_df['datetime'])
-    metadata_df['date'] = metadata_df['datetime'].dt.date
-    metadata_df['day_id'] = metadata_df['subject_id'].apply(str) + '_' + metadata_df['date'].apply(str)   
+    metadata_df['call_datetime'] = pd.to_datetime(metadata_df['call_datetime'])
+    metadata_df['call_date'] = metadata_df['call_datetime'].dt.date
+    metadata_df['day_id'] = metadata_df['subject_id'].apply(str) + '_' + metadata_df['call_date'].apply(str)     
 
     #filter call type (personal, assessment, all) 
     if args.call_type == 'personal':
@@ -67,7 +67,7 @@ def extract_open_smile_features(args):
     #COMPUTE OPENSMILE FEATURES 
     #***********************************************************
     #***********************************************************
-    for idx in idx_vals[0:5]: #iterate over calls or days
+    for idx in idx_vals: #iterate over calls or days
         seg_ids = metadata_df.loc[metadata_df[idx_col] == idx, 'segment_id'].unique()  
 
         #Compute features for all segment in idx 
