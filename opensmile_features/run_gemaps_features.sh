@@ -30,3 +30,4 @@ python3 agg_opensmile_features.py \
 --call_type='personal' \
 --input_dir='/scratch/emilykmp_root/emilykmp/aromana/gemaps_features/days/personal/' \
 --output_dir='.' \
+--tag='gemaps' \

@@ -7,10 +7,11 @@ from IPython import embed
 #Parse Arguments 
 #**********************
 parser = argparse.ArgumentParser()
-parser.add_argument('--input_dir', type=str, help="Path to directory with individual output files")
-parser.add_argument('--output_dir', type=str, help="Path to directory to output feature files to.")
+parser.add_argument('--input_dir', type=str, help="Path to directory with individual output feature files")
+parser.add_argument('--output_dir', type=str, help="Path to directory to output combined feature files to.")
 parser.add_argument('--level', type=str, default='call')
 parser.add_argument('--call_type', type=str, default='all')
+parser.add_argument('--tag', type=str, help="Output file tag filename_tag.csv")
 args = parser.parse_args()
 
 #Aggregate individual files in input_dir 
@@ -33,6 +34,6 @@ elif args.level == 'call':
         df_full.insert(loc=0, column='call_id', value=df_full.index.values) 
 
 #Save aggregate file 
-df_full.to_csv(os.path.join(args.output_dir, args.level + '_' + args.call_type + '_gemaps.csv'), index=False) 
+df_full.to_csv(os.path.join(args.output_dir, args.level + '_' + args.call_type + '_' + args.tag + '.csv'), index=False) 
 
 
