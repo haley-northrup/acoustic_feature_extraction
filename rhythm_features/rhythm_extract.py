@@ -1,6 +1,14 @@
 '''
 Required Library: 
 https://pypi.org/project/EMD-signal/
+
+Amrit Updated John's Original Code (2020-12-05) 
+Step D: Empirical Mode Decomposition 
+eemd vs. emd 
+eemd - ensemble empirical mode decomposition (John's version)
+emd - empirical mode decomposition (Updated version - matches John's paper description) 
+
+
 '''
 
 import sys, os 
