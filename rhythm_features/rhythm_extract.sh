@@ -12,13 +12,6 @@
 #SBATCH --partition=standard
 #SBATCH --export=NONE 
 
-#module load python-anaconda3
-
 python3 rhythm_extract.py \
 --segments_dir='/nfs/turbo/McInnisLab/hnorthru/code/acoustic_feature_extraction/rhythm_features/temp/wavs/' \
 --output_dir='/nfs/turbo/McInnisLab/hnorthru/code/acoustic_feature_extraction/rhythm_features/temp/feats/' \
-
-#--metadata_path='/nfs/turbo/McInnisLab/priori_v1_data/collections/emotion_preds.csv' \
-#--level='day' \
-#--job_num=$SLURM_ARRAY_TASK_ID  \
-#--call_type='personal' \

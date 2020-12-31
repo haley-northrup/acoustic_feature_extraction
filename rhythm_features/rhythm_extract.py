@@ -1,15 +1,19 @@
+'''
+Required Library: 
+https://pypi.org/project/EMD-signal/
+'''
+
 import sys, os 
 import numpy as np
+import pandas as pd 
 import scipy.io.wavfile as wav
 from scipy import signal
 from PyEMD import EMD 
+
 from multiprocessing import Pool
+import argparse
+
 NUM_PROCESSES = 1
-import pickle
-
-
-input_dir = '/data/aromana/pd/Paragraph_2/Audio_8k/man_utt'
-output_dir = '/data/aromana/pd/Paragraph_2/rhythm_feats'
 
 def discreteIntegral(y, Fs, fLower, fUpper, weighted):
     f = (Fs/2)*np.linspace(0.0,1.0,len(y))
@@ -123,27 +127,42 @@ def extractRhythmFeatures(audio, Fs, windowSize, stepSize):
         IMF1_S = np.std(Fi[0])
         IMF2_M = np.mean(Fi[1])
         IMF2_S = np.std(Fi[1])                
-        feats[fOn,2:] = [IMF12, IMF1_M, IMF1_S, IMF2_M, IMF2_S]       
+        feats[fOn,2:] = [IMF12, IMF1_M, IMF1_S, IMF2_M, IMF2_S] 
+    feat_names = ['SPBr3_5', 'CNTR1_10', 'IMF12', 'IMF1_M', 'IMF1_S', 'IMF2_M', 'IMF2_S']      
 
-    return feats
+    return feats, feat_names 
 
-def extractRhythmMap(f):
+def extractRhythmMap(f, input_dir, output_dir):
     audioPath = os.path.join(input_dir, f)
-    featPath = os.path.join(output_dir, f.replace('.wav','.npy'))
+    #featPath = os.path.join(output_dir, f.replace('.wav','.npy'))
+    featPath = os.path.join(output_dir, f.replace('.wav','.csv'))
     if not os.path.exists(featPath):
         (Fs, x) = wav.read(audioPath)
         x = x.astype(np.float) / 32768.0
-        feats = extractRhythmFeatures(x, Fs, 2*Fs, Fs)
-        np.save(featPath, feats)   
+        #feats = extractRhythmFeatures(x, Fs, 2*Fs, Fs)
+        #np.save(featPath, feats) 
+        feats, feat_names = extractRhythmFeatures(x, Fs, 2*Fs, Fs)
+        df = pd.DataFrame(feats, columns = feat_names) 
+        df.to_csv(featPath, index=False) 
+
+def _parse_args():
+    parser = argparse.ArgumentParser()
+    #parser.add_argument('--level', type=str, default='call')
+    #parser.add_argument('--job_num', type=int, default=1) 
+    #parser.add_argument('--call_type', type=str, default='all', help='specifies type of call (assessment, personal, or all)')
+    parser.add_argument('--segments_dir', type=str, help='Path to directory with segment wave files')
+    parser.add_argument('--output_dir', type=str, help="Path to directory to output feature files to.")
+    #parser.add_argument('--metadata_path', type=str, help="Path to segment metadata file (subject, call, etc.).")
+    return parser.parse_args()
 
 def main():
-
-    files = os.listdir(input_dir)
+    args = _parse_args() 
+    files = os.listdir(args.segments_dir)
     files = [f for f in files if f.endswith('.wav')]
 
     if NUM_PROCESSES==1:
         for f in files:
-            extractRhythmMap(f)
+            extractRhythmMap(f, args.segments_dir, args.output_dir)
     else:
         pool = Pool(processes=NUM_PROCESSES)
         pool.map(extractRhythmMap, files)
