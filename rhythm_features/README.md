@@ -1,6 +1,6 @@
 Compute segment-level Rhythm features mean, std over call or day 
 
-adapted from: /nfs/turbo/McInnisLab/gideonjn/extractRhythm.m, extractRhythm.py 
+adapted from: /nfs/turbo/McInnisLab/gideonjn/Journal2018/extractRhythm.py 
  
 
 get_rhythm_featrues.sh: script to run get_rhythm_features.py 
