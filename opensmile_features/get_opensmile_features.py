@@ -27,7 +27,7 @@ def extract_open_smile_features(args):
     #set up 
     level = args.level  
     temp_dir = os.path.join(args.output_dir, 'segments')
-    output_dir = os.path.join(args.output_dir, level+'s', args.call_type)   
+    output_dir = os.path.join(args.output_dir, level, args.call_type)   
  
     #get segment metadata 
     metadata_df = pd.read_csv(args.metadata_path)
@@ -36,6 +36,9 @@ def extract_open_smile_features(args):
     metadata_df['day_id'] = metadata_df['subject_id'].apply(str) + '_' + metadata_df['call_date'].apply(str)     
 
     #filter call type (personal, assessment, all) 
+    if metadata_df['is_assessment'].dtypes == 'bool':
+        metadata_df.loc[metadata_df['is_assessment'] == True, 'is_assessment'] = 't'
+        metadata_df.loc[metadata_df['is_assessment'] == False, 'is_assessment'] = 'f'
     if args.call_type == 'personal':
         metadata_df = metadata_df.loc[metadata_df['is_assessment'] == 'f', :]
     elif args.call_type == 'assessment':
