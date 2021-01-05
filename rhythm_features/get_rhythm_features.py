@@ -27,7 +27,7 @@ def extract_rhythm_features(args):
     #set up 
     level = args.level  
     temp_dir = os.path.join(args.output_dir, 'segments')
-    output_dir = os.path.join(args.output_dir, level+'s', args.call_type)   
+    output_dir = os.path.join(args.output_dir, level, args.call_type)   
  
     #get segment metadata 
     metadata_df = pd.read_csv(args.metadata_path)
