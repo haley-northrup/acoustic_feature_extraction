@@ -12,8 +12,14 @@ import sys
 import argparse
 import pandas as pd 
 from IPython import embed
-from get_chunks import chunks 
+import math 
+import numpy as np 
 from rhythm_extract import extractRhythmMap
+
+def chunks(l, n_chunks):
+	n_in_chunk = math.ceil(float(len(l))/float(n_chunks))
+	for i in range(0,len(l),n_in_chunk):
+		yield l[i:i+n_in_chunk]
 
 
 def extract_rhythm_features(args):
@@ -94,6 +100,10 @@ def extract_rhythm_features(args):
             if col in ['segment_id']:
                 continue   
             s[col+'_mean'] = feats_df[col].mean() 
+            s[col+'_median'] = feats_df[col].median() 
+            s[col+'_p01'] = feats_df[col].quantile(0.01) 
+            s[col+'_p99'] = feats_df[col].quantile(0.99) 
+            s[col+'_range'] = feats_df[col].max() - feats_df[col].min()
             s[col+'_std'] = feats_df[col].std() 
 
         #save feature stats for index to file 
