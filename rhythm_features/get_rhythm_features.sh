@@ -1,5 +1,5 @@
 #!/bin/sh
-#SBATCH --job-name=rhythm_day 
+#SBATCH --job-name=rhythm_feats 
 #SBATCH --mail-user=hnorthru@umich.edu
 #SBATCH --mail-type=FAIL
 #SBATCH --nodes=1
@@ -22,11 +22,3 @@ python3 get_rhythm_features.py \
 --segments_dir='/nfs/turbo/McInnisLab/PRIORI_v1_Microsoft_Azure/PRIORI-v1-Microsoft-segments/wav/' \
 --output_dir='/scratch/emilykmp_root/emilykmp/hnorthru/priori_v1/microsoft_rhythm/' \
 --metadata_path='/nfs/turbo/McInnisLab/PRIORI_v1_Microsoft_Azure/PRIORI-v1-Microsoft-segments/priori_v1_ma_segments.csv' \
-
-wait 
-
-python3 agg_rhythm_features.py \
---level='day' \
---call_type='personal' \
---input_dir='/scratch/emilykmp_root/emilykmp/hnorthru/priori_v1/microsoft_rhythm/day/personal/' \
---output_dir='.' \
