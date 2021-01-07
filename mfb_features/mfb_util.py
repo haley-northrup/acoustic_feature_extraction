@@ -1,9 +1,30 @@
-from utils import *
+#from utils import *
 import librosa
 import soundfile as sf
 from python_speech_features import fbank
 import scipy.io.wavfile as wav
 import subprocess
+import numpy as np 
+
+''' 
+Questions:
+Do you call "get_mfbs" or "new_get_mfbs"? 
+- Alex both work similarly 
+
+What does preemphasis do?
+
+Are all of these settings fixed? 
+Would we ever want to change them?
+What assumptions are made in this process?
+
+Does librosa apply normalization by default?
+Do we need to normalize prior to calling librosa?
+
+When do we want to normalize audio amplitude? Commented out in "extractMfbs"??
+
+TODO:
+Add comments
+''' 
 
 n_mels = 40
 n_fft = 2048
@@ -22,8 +43,8 @@ def normAudioAmplitude(sig):
     return sig.astype(np.float)/-np.iinfo(np.int16).min
 
 def extractMfbs(x, fs):
-    # normalize
-    # x = normAudioAmplitude(x)
+    # normalize (2021-01-05 originally commented out when provided by Alex) 
+    #x = normAudioAmplitude(x)  
     
         # Constants
     MFB_DIM = 40
