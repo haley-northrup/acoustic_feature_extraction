@@ -12,9 +12,9 @@
 #SBATCH --partition=standard
 #SBATCH --export=NONE 
 
-source /nfs/turbo/McInnisLab/hnorthru/anaconda3/etc/profile.d/conda.sh 
-conda activate gid_8_tn_20200220
+#source /nfs/turbo/McInnisLab/hnorthru/anaconda3/etc/profile.d/conda.sh 
+#conda activate gid_8_tn_20200220
 
-python3 get_mfbs.py \
---segments_dir='/nfs/turbo/McInnisLab/PRIORI_v1_Microsoft_Azure/PRIORI-v1-Microsoft-segments/wav/' \
---output_dir='./temp' \
+python3 extract_mfbs.py \
+--wav_dir='/nfs/turbo/McInnisLab/PRIORI_v1_Microsoft_Azure/PRIORI-v1-Microsoft-segments/wav/' \
+--output_dir='/nfs/turbo/McInnisLab/hnorthru/code/acoustic_feature_extraction/mfb_features/temp' \
