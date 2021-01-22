@@ -8,7 +8,6 @@ https://haythamfayek.com/2016/04/21/speech-processing-for-machine-learning.html
 MADDoG Paper:
 https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=8713918
 
-
 '''
 
 import argparse 
@@ -38,7 +37,7 @@ _N_MELS = 40
 
 
 def extract_mfb(y, output_file):
-    ''' Extract MFBs using the librosa package 
+    ''' Extract MFBs using the librosa package saveas numpy file (.npy)
 
     Inputs:
         y - audio data 
@@ -87,8 +86,9 @@ def extract_mfb(y, output_file):
     #save transposed version of MFB (compatible with MADDoG architecture) 
     np.save(output_file, arr=np.transpose(log_mel_spectrogram))
 
-    plt.imshow(log_mel_spectrogram) 
-    plt.savefig(output_file.strip('.npy') + '.png')
+    #Visualization 
+    #plt.imshow(log_mel_spectrogram) 
+    #plt.savefig(output_file.strip('.npy') + '.png')
 
 
 def _parse_args():
